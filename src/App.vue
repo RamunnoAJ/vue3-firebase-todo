@@ -4,24 +4,28 @@
     <div class="title has-text-centered">
       Todo list
     </div>
-    <div class="field has-addons mb-5">
-      <div class="control">
-        <input class="input" type="text" placeholder="Add a todo">
-      </div>
-      <div class="control">
-        <a class="button is-info">
-          Add
-        </a>
-      </div>
-    </div>
 
-    <div class="card mb-5" v-for="i in 3">
+    <form @submit.prevent="addTodo">
+      <div class="field is-grouped mb-5">
+        <p class="control is-expanded pr-2">
+          <input class="input" type="text" placeholder="Add a todo" v-model="newTodoContent">
+        </p>
+        <p class="control">
+          <button class="button is-info" :disabled="!newTodoContent">
+            Add
+          </button>
+        </p>
+      </div>
+    </form>
+
+
+    <div class="card mb-5" v-for="todo in todos">
       <div class="card-content">
         <div class="content">
 
           <div class="columns is-mobile">
             <div class="column">
-              Shave my beard
+              {{ todo.content }}
             </div>
             <div class="column is-5 has-text-right">
               <button class="button is-light">
@@ -38,23 +42,45 @@
   </div>
 </template>
 
+<script setup>
+import { ref } from 'vue';
+import { v4 as uuidv4 } from 'uuid'
+
+const todos = ref([
+  // {
+  //   id: 'id1',
+  //   content: 'Shave my beard',
+  //   done: false
+  // },
+  // {
+  //   id: 'id2',
+  //   content: 'Wash my beard',
+  //   done: false
+  // }
+])
+
+const newTodoContent = ref('')
+
+
+const addTodo = () => {
+  const newTodo = {
+    id: uuidv4(),
+    content: newTodoContent.value,
+    done: false
+  }
+  todos.value.unshift(newTodo)
+  newTodoContent.value = ''
+}
+</script>
+
 <style scoped>
 @import '../node_modules/bulma/css/bulma.min.css';
 
-
-*[data-v-7ba5bd90],
-[data-v-7ba5bd90]::after,
-[data-v-7ba5bd90]::before {
-  box-sizing: initial;
-}
-
 .my-todo {
-  max-width: 800px;
+  max-width: 400px;
   padding: 20px;
   margin: 0 auto;
   display: flex;
-  align-content: center;
   flex-direction: column;
-  align-items: center;
 }
 </style>
