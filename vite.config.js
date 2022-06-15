@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/vue3-firebase-todo',
+  base: '/vue3-firebase-todo/',
   plugins: [vue()],
   resolve: {
     alias: {
