@@ -44,7 +44,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { collection, doc, onSnapshot, addDoc, deleteDoc } from "firebase/firestore"
+import { collection, doc, onSnapshot, addDoc, deleteDoc, updateDoc } from "firebase/firestore"
 import { db } from '@/firebase'
 
 const todosCollectionRef = collection(db, 'todos')
@@ -93,7 +93,10 @@ const deleteTodo = id => {
 
 const toggleDone = id => {
   const index = todos.value.findIndex(todo => todo.id === id)
-  todos.value[index].done = !todos.value[index].done
+
+  updateDoc(doc(todosCollectionRef, id), {
+    done: !todos.value[index].done
+  })
 }
 </script>
 
