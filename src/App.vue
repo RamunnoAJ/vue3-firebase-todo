@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card mb-5" v-for="i in 3">
       <div class="card-content">
         <div class="content">
 
@@ -32,8 +32,6 @@
               </button>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -43,11 +41,17 @@
 <style scoped>
 @import '../node_modules/bulma/css/bulma.min.css';
 
+
+*[data-v-7ba5bd90],
+[data-v-7ba5bd90]::after,
+[data-v-7ba5bd90]::before {
+  box-sizing: initial;
+}
+
 .my-todo {
   max-width: 800px;
   padding: 20px;
   margin: 0 auto;
-  text-align: center;
   display: flex;
   align-content: center;
   flex-direction: column;
