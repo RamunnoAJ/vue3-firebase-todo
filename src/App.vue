@@ -19,16 +19,16 @@
     </form>
 
 
-    <div class="card mb-5" v-for="todo in todos">
+    <div class="card mb-5" v-for="todo in todos" :class="{ 'has-background-success-light': todo.done }">
       <div class="card-content">
         <div class="content">
 
           <div class="columns is-mobile">
-            <div class="column">
+            <div class="column" :class="{ 'has-text-success line-through': todo.done }">
               {{ todo.content }}
             </div>
             <div class="column is-5 has-text-right">
-              <button class="button is-light">
+              <button class="button" :class="todo.done ? 'is-success' : 'is-light'" @click="toggleDone(todo.id)">
                 &check;
               </button>
               <button class="button is-danger ml-2" @click="deleteTodo(todo.id)">
@@ -47,16 +47,16 @@ import { ref } from 'vue';
 import { v4 as uuidv4 } from 'uuid'
 
 const todos = ref([
-  {
-    id: 'id1',
-    content: 'Shave my beard',
-    done: false
-  },
-  {
-    id: 'id2',
-    content: 'Wash my beard',
-    done: false
-  }
+  // {
+  //   id: 'id1',
+  //   content: 'Shave my beard',
+  //   done: false
+  // },
+  // {
+  //   id: 'id2',
+  //   content: 'Wash my beard',
+  //   done: true
+  // }
 ])
 
 const newTodoContent = ref('')
@@ -75,10 +75,16 @@ const addTodo = () => {
 const deleteTodo = id => {
   todos.value = todos.value.filter(todo => todo.id !== id)
 }
+
+const toggleDone = id => {
+  const index = todos.value.findIndex(todo => todo.id === id)
+  todos.value[index].done = !todos.value[index].done
+}
 </script>
 
 <style scoped>
 @import '../node_modules/bulma/css/bulma.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 .my-todo {
   max-width: 400px;
@@ -86,5 +92,14 @@ const deleteTodo = id => {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.column {
+  align-self: center;
+}
+
+.line-through {
+  text-decoration: line-through;
 }
 </style>
